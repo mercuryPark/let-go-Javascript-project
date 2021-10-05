@@ -137,22 +137,92 @@
 // };
 
 
+// prompt('몇 명이 참가하나요?');
+
+// const number = prompt('몇 명이 참가하나요?');
+
+// const realNumber = Number(number);
+// console.log(typeof realNumber);
+
+// const $input = document.querySelector('input');
+// console.log($input);
+
+// const $button = document.querySelector('button');
+// console.log($button);
 
 
+// 자바스크립트 이벤트 리스너
 
+// const onClickButton = () => {
+//     console.log('버튼 클릭');
+// };
 
+// const $button = document.querySelector('button');
+// $button.addEventListener('click',onClickButton);
 
+// // 이때 event 는 매개변수이기 때문에 사용자가 원하는 어떠한 값을 넣어도 상관없다.
+// // 그러나 전혀 상관없는 단어는 가독성을 떨어뜨리기 때문에 event와 같이 접근성있는 단어로 하는것이 좋다.
 
+// const onInput = (event) => {
+//     console.log('글자 입력', event.target.value);
+// };
+// const $input = document.querySelector('input');
+// $input.addEventListener('input',onInput);
 
+const number = Number(prompt('몇 명이 참가하나요?'));
+const $button = document.querySelector('button');
+const $input = document.querySelector('input');
+const $word = document.querySelector('#word');
+const $order = document.querySelector('#order');
+let word; //제시어
+let newWord; // 현재 단어
 
+const onClickButton = () => {
+    // word 에 아무런 값을 넣지 않았으니 undefined 이다ㅏ if 문안에 들어가면 false로 취급되기 때문에
+    // !word 로 true로 취급되게끔 만들었다.
+    if(!word) { // 제시어가 비어 있는가?
+       word = newWord; // 입력한 단어가 제시어가 된다.
+       $word.textContent = word; // 화면에 제시어 표시
 
+       const order = Number($order.textContent);
+       if(order + 1 > number) {
+           $order.textContent = 1;
+       } else {
+           $order.textContent = order + 1;
+       }
+       $input.value = '';
+        $input.focus();
+    }
+    else {
+        // 비어 있지 않다.
+        if(word[word.length - 1] === newWord[0]) { // 입력한 단어가 올바른가?
+        // 올바르다.
+        word = newWord; // 현재 단어를 제시어에 저장한다.
+        $word.textContent = word; // 화면에 제시어 표시
+        const order = Number($order.textContent);
+        if (order + 1 > number) {
+            $order.textContent = 1;
+        }
+        else {
+            $order.textContent = order + 1;
+        }
+        $input.value = '';
+        $input.focus();
 
+        } else {
+            alert('올바르지 않은 단어입니다!')  // 올바르지 않다.
+            $input.value = '';
+        $input.focus();
+        }
+    }
 
+};
+const onInput = (event) => {
+   newWord = event.target.value; // 입력한 단어를 현재 단어로
+};
 
-
-
-
-
+$button.addEventListener('click',onClickButton);
+$input.addEventListener('input',onInput);
 
 
 
